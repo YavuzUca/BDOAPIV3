@@ -1,5 +1,6 @@
 secret.py
 .idea/
+__pycache__
 
 # Environments
 .env
