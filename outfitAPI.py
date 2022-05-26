@@ -6,8 +6,8 @@ from secret import *
 def getPearlItems():
     """ Function that returns a list of pearl items, seven day volume ordered """
     response = requests.get("https://apiv2.bdolytics.com/en/EU/market/pearl-items?sort=seven_day_volume_asc",
-                            data={},
-                            headers={})
+                                data={},
+                                headers={})
     data_json = response.json()
     return data_json['data']
 
@@ -63,23 +63,11 @@ class OutfitAPI:
         data_json = response.json()
         return data_json['marketConditionList']
 
-    def findHighestPrice(self, list):
-        """ A function that inputs a json list from getSellInfo() and retuns the highest price possible at that
-        moment in time. """
-        highest = 0
-        for item in list:
-            if item['pricePerOne'] > highest:
-                highest = item['pricePerOne']
-
-        return highest
-
     def findBuyCount(self):
         """ A function that has a json list as data var and returns the buy count of a specific price. """
         data = self.getSellInfo()
-        highest_price = self.findHighestPrice(data)
-
+        highest = 0
         for item in data:
-            if item['pricePerOne'] == highest_price:
-                return item['buyCount']
-
-        return 0
+            if item['pricePerOne'] > highest and item['buyCount'] > 1:
+                highest = item['pricePerOne']
+        return item['buyCount']
