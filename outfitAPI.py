@@ -68,6 +68,6 @@ class OutfitAPI:
         data = self.getSellInfo()
         highest = 0
         for item in data:
-            if item['pricePerOne'] > highest and item['buyCount'] > 1:
+            if item['pricePerOne'] > highest and item['buyCount'] > 0:
                 highest = item['pricePerOne']
         return item['buyCount']
